@@ -21,7 +21,6 @@
            - Section-title black rectangle covers the whole top box of each card
            - Footer is a black rectangle with white text
            - All site text uses the same font family and consistent colors (hero white on black, content black on white)
-           - Resources card is taller on monitors so it looks fuller
            - Links are clearly identifiable
         */
         :root {
@@ -143,11 +142,12 @@
             gap: 0.5rem;
         }
 
-        /* Make Resources span both columns and be taller so it looks fuller on a monitor */
+        /* Make Resources span both columns. Height is natural (no forced min-height).
+           Removed previous forced min-height so content determines height.
+        */
         .card.resources {
             grid-column: 1 / -1;
         }
-        .card.resources .card-body { min-height: 420px; }
 
         /* Subtitles (h2) are smaller than the section title */
         .card h2, .card h3 {
@@ -180,7 +180,6 @@
             .card .card-header { padding: 1.5rem 1.5rem; }
             .card .section-title { font-size: 1.6rem; }
             .card .card-body { padding: 2rem; }
-            .card.resources .card-body { min-height: 520px; }
             .grid { gap: 2.5rem; }
         }
 
@@ -254,7 +253,7 @@
                             </td>
                             <td valign="top" width="33%">
                                 <ul class="links-list2">
-                                    <li><a href="https://homelessness.ucsf.edu/our-impact/studies/california-statewide-study-people-experiencing-homelessness" target="_blank">UCSF Statewide Study →</a></li>
+                                    <li><a href="https://homelessness.ucsf.edu/our-impact/studies/california-statewide-study-people-experiencing-homelessness" target="_blank">UCSF Statewide Study[...]
                                     <li><a href="https://www.spur.org/featured-project/homelessness-bay-area" target="_blank">SPUR: Bay Area →</a></li>
                                 </ul>
                             </td>
