@@ -18,9 +18,11 @@
     <meta name="robots" content="index, follow">
     <style>
         /* Layout & colors for requested design
-           - Hero: full-width black rectangle with white title & subtitle
-           - Content: aligned to same container edges as hero content
-           - Sections: white cards, black body text, section titles are black rectangles with white text
+           - Hero: full-width black rectangle with white centered title & subtitle
+           - Top row: two cards (Digital Art Contests, Contests Listing)
+           - Resources: spans full width under those two, aligned to same container edges
+           - Section titles: black rectangles with white text; larger than card subtitles
+           - All links black
         */
         :root {
             --page-bg: #ffffff;
@@ -42,21 +44,23 @@
             color: var(--text-primary);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            display: flex;            /* keep sticky footer layout */
+            display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* Hero: full-width black band, with centered inner container that aligns with page content */
+        /* Hero: full-width black band, centered content */
         .hero {
             background: var(--hero-bg);
             color: var(--section-title-color);
             padding: 3.25rem 0; /* vertical space for the black rectangle */
+            text-align: center; /* center title and subtitle */
         }
         .hero .container {
             max-width: var(--max-width);
             margin: 0 auto;
             padding: 0 1.5rem;
+            box-sizing: border-box;
         }
         .hero h1 {
             margin: 0 0 0.5rem 0;
@@ -65,7 +69,7 @@
             color: var(--section-title-color);
         }
         .hero p {
-            margin: 0;
+            margin: 0 auto;
             font-size: 1.125rem;
             color: var(--section-title-color);
             opacity: 0.95;
@@ -81,9 +85,10 @@
             box-sizing: border-box;
         }
 
+        /* Grid: two columns on wide screens; resources will span both columns */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
             align-items: start;
         }
@@ -98,43 +103,53 @@
             color: var(--text-primary);
         }
 
+        /* Make Resources span both columns */
+        .card.resources {
+            grid-column: 1 / -1;
+        }
+
         /* Section title: black rectangle with white text that spans the card width */
         .card .section-title {
             display: block;
             background: var(--section-title-bg);
             color: var(--section-title-color);
-            padding: 0.5rem 0.75rem;
+            padding: 0.75rem 1rem;
             margin: -1.5rem -1.5rem 1rem -1.5rem; /* extend to card edges */
-            font-weight: 700;
+            font-weight: 800;
+            font-size: 1.25rem; /* make section title larger */
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
             box-sizing: border-box;
         }
 
+        /* Card subtitles / link headings smaller than section-title */
         .card h2, .card h3 {
-            margin: 0;
-            font-size: 1.25rem;
+            margin: 0.25rem 0 0 0;
+            font-size: 1rem; /* smaller than section title */
+            font-weight: 700;
         }
 
         .card p {
-            margin: 0.6rem 0 0 0;
+            margin: 0.5rem 0 0 0;
             color: var(--text-primary); /* main writing in black */
             font-size: 0.95rem;
+        }
+
+        /* All links should be black */
+        a, a:visited {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
         }
 
         .links-list, .links-list2 {
             list-style: none;
             padding: 0;
-            margin: 1rem 0 0 0;
+            margin: 0.75rem 0 0 0;
         }
         .links-list li, .links-list2 li { margin-bottom: 0.6rem; }
-
-        .links-list a, .links-list2 a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .links-list a:hover, .links-list2 a:hover { text-decoration: underline; }
 
         footer {
             flex-shrink: 0;
@@ -146,14 +161,14 @@
             background-color: transparent;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
+        /* Responsive adjustments: single column on narrow screens */
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+            .card .section-title { margin-left: -1rem; margin-right: -1rem; }
             .hero { padding: 2rem 0; }
             .hero h1 { font-size: 1.75rem; }
             .container { margin: 1rem auto 2rem auto; }
-            .grid { gap: 1rem; }
             .card { padding: 1rem; }
-            .card .section-title { margin-left: -1rem; margin-right: -1rem; }
         }
     </style>
 </head>
@@ -168,9 +183,9 @@
 
     <main class="container">
         <div class="grid">
-            <!-- Column 1: Digital Art contests -->
+            <!-- Column 1: Digital Art Contests -->
             <article class="card">
-                <span class="section-title">Digital Art contests</span>
+                <span class="section-title">Digital Art Contests</span>
                 <h2><a href="https://wingeddelegates.github.io/sf">Explore contests</a></h2>
                 <p>Publishing your artwork to heal minds, inspire people, and develop the communities.</p>
                 <ul class="links-list">
@@ -178,9 +193,9 @@
                 </ul>
             </article>
 
-            <!-- Column 2: Contests listing -->
+            <!-- Column 2: Contests Listing -->
             <article class="card">
-                <span class="section-title">Contests listing</span>
+                <span class="section-title">Contests Listing</span>
                 <h2><a href="https://wingeddelegates.github.io/contest">Browse public listings</a></h2>
                 <p>Find other art contests or post your contest on this website.</p>
                 <ul class="links-list">
@@ -188,8 +203,8 @@
                 </ul>
             </article>
 
-            <!-- Column 3: Resources -->
-            <article class="card">
+            <!-- Column 3: Resources (spans both columns) -->
+            <article class="card resources">
                 <span class="section-title">Resources</span>
                 <h2>Helpful links</h2>
                 <p>Community resources, department dashboards, and nonprofit services.</p>
