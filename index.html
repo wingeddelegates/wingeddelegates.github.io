@@ -17,19 +17,27 @@
     <meta name="description" content="Art competition; digital art contest; fire safety; homeless; drug free; san francisco; united states; art awards; photography; mixed art; winged delegate">
     <meta name="robots" content="index, follow">
     <style>
-        /* Adjusted layout: equal-width top cards, Resources spans both columns, larger sizes on large monitors, links clearly identifiable */
+        /* Refined layout per request:
+           - Section-title black rectangle covers the whole top box of each card
+           - Footer is a black rectangle with white text
+           - All site text uses the same font family and consistent colors (hero white on black, content black on white)
+           - Resources card is taller on monitors so it looks fuller
+           - Links are clearly identifiable
+        */
         :root {
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --page-bg: #ffffff;
-            --text-primary: #0b0b0b;
-            --text-secondary: #4a4a4a;
+            --text-primary: #0b0b0b;      /* black for body/content */
+            --text-muted: #4a4a4a;
             --card-bg: #ffffff;
             --hero-bg: #000000;
+            --hero-text: #ffffff;
             --section-title-bg: #000000;
             --section-title-color: #ffffff;
             --border-color: #e6e6e6;
             --max-width: 1200px;
-            --link-color: #000000; /* black links as requested */
-            --link-hover: #333333;
+            --link-color: #000000;
+            --link-hover: #222222;
         }
 
         html, body {
@@ -38,17 +46,19 @@
             padding: 0;
             background: var(--page-bg);
             color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--font-family);
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
         }
 
-        /* Hero: centered title & subtitle */
+        /* HERO: centered title & subtitle */
         .hero {
             background: var(--hero-bg);
-            color: var(--section-title-color);
+            color: var(--hero-text);
             padding: 3.25rem 0;
             text-align: center;
         }
@@ -60,14 +70,14 @@
         }
         .hero h1 {
             margin: 0 0 0.5rem 0;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--section-title-color);
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--hero-text);
         }
         .hero p {
             margin: 0 auto;
             font-size: 1.125rem;
-            color: var(--section-title-color);
+            color: var(--hero-text);
             opacity: 0.95;
             max-width: 900px;
         }
@@ -81,7 +91,7 @@
         }
 
         /* Two-column grid for top row; resources spans both columns
-           Use grid-auto-rows: 1fr and stretch so top cards match height */
+           grid-auto-rows: 1fr and align-items: start make top cards equal height */
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -94,93 +104,95 @@
             background-color: var(--card-bg);
             border-radius: 8px;
             box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-            padding: 1.5rem;
+            padding: 0; /* remove padding so section-title can cover the top fully */
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            overflow: visible;
         }
 
+        /* Section-title now covers the whole top box of each card.
+           We create a separate header area inside the card (.card-header) that is the black rectangle.
+        */
+        .card .card-header {
+            background: var(--section-title-bg);
+            color: var(--section-title-color);
+            padding: 1.25rem 1.25rem; /* taller header to "cover the whole box" */
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* we'll left-align the section label in the header */
+            gap: 1rem;
+        }
+
+        .card .section-title {
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin: 0;
+            color: var(--section-title-color);
+        }
+
+        /* Card content area beneath the black header */
+        .card .card-body {
+            padding: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        /* Make Resources span both columns and be taller so it looks fuller on a monitor */
         .card.resources {
             grid-column: 1 / -1;
         }
+        .card.resources .card-body { min-height: 420px; }
 
-        /* Section title: larger black rectangle
-           Negative margins make it reach card edges */
-        .card .section-title {
-            display: block;
-            background: var(--section-title-bg);
-            color: var(--section-title-color);
-            padding: 0.9rem 1rem;
-            margin: -1.5rem -1.5rem 1rem -1.5rem;
-            font-weight: 800;
-            font-size: 1.35rem; /* slightly bigger */
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            box-sizing: border-box;
-        }
-
-        /* Subtitles (h2) are smaller than section title */
+        /* Subtitles (h2) are smaller than the section title */
         .card h2, .card h3 {
-            margin: 0.25rem 0 0 0;
+            margin: 0;
             font-size: 1.05rem;
             font-weight: 700;
         }
+        .card p { margin: 0.35rem 0 0 0; font-size: 0.98rem; color: var(--text-primary); }
 
-        .card p {
-            margin: 0.5rem 0 0 0;
-            color: var(--text-primary);
-            font-size: 0.97rem;
-        }
+        /* Links: black, bold, underlined to be easily identifiable */
+        a, a:visited { color: var(--link-color); text-decoration: underline; font-weight: 700; }
+        a:hover { color: var(--link-hover); text-decoration: underline; }
 
-        /* Links: black, bold-ish, underlined to be easily identified */
-        a, a:visited {
-            color: var(--link-color);
-            text-decoration: underline; /* visible by default */
-            font-weight: 600;
-        }
-        a:hover {
-            color: var(--link-hover);
-            text-decoration: underline;
-        }
-
-        .links-list, .links-list2 {
-            list-style: none;
-            padding: 0;
-            margin: 0.75rem 0 0 0;
-        }
+        .links-list, .links-list2 { list-style: none; padding: 0; margin: 0.75rem 0 0 0; }
         .links-list li, .links-list2 li { margin-bottom: 0.6rem; }
 
-        /* Slightly larger cards and typography on large monitors */
+        /* Footer as a black rectangle with white text */
+        footer {
+            background: var(--section-title-bg);
+            color: var(--section-title-color);
+            padding: 1rem 1.25rem;
+            text-align: center;
+        }
+        footer .site-legal { margin: 0; font-weight: 600; }
+
+        /* Larger presentation on large monitors */
         @media (min-width: 1200px) {
-            .hero h1 { font-size: 3rem; }
+            .hero h1 { font-size: 3.25rem; }
             .hero p { font-size: 1.25rem; }
-            .card { padding: 2rem; }
-            .card .section-title { font-size: 1.5rem; padding: 1rem 1.25rem; }
-            .card h2 { font-size: 1.125rem; }
-            .card p { font-size: 1rem; }
+            .card .card-header { padding: 1.5rem 1.5rem; }
+            .card .section-title { font-size: 1.6rem; }
+            .card .card-body { padding: 2rem; }
+            .card.resources .card-body { min-height: 520px; }
             .grid { gap: 2.5rem; }
         }
 
-        footer {
-            flex-shrink: 0;
-            text-align: center;
-            padding: 1.25rem 1rem;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border-color);
-            background-color: transparent;
-        }
-
-        /* Responsive: single column on small screens */
+        /* Responsive: stack on small screens */
         @media (max-width: 900px) {
             .grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
-            .card .section-title { margin-left: -1rem; margin-right: -1rem; }
+            .card .card-body { min-height: auto; }
             .hero { padding: 2rem 0; }
             .hero h1 { font-size: 1.75rem; }
             .container { margin: 1rem auto 2rem auto; }
-            .card { padding: 1rem; }
+            .card .card-header { padding: 1rem; }
+            .card .card-title { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -197,52 +209,64 @@
         <div class="grid">
             <!-- Column 1: Digital Art Contests -->
             <article class="card">
-                <span class="section-title">Digital Art Contests</span>
-                <h2><a href="https://wingeddelegates.github.io/sf">Explore contests</a></h2>
-                <p>Publishing your artwork to heal minds, inspire people, and develop the communities.</p>
-                <ul class="links-list">
-                    <li><a href="#">Winged Delegates Digital Art Contests 2026</a></li>
-                </ul>
+                <div class="card-header">
+                    <span class="section-title">Digital Art Contests</span>
+                </div>
+                <div class="card-body">
+                    <h2><a href="https://wingeddelegates.github.io/sf">Explore contests</a></h2>
+                    <p>Publishing your artwork to heal minds, inspire people, and develop the communities.</p>
+                    <ul class="links-list">
+                        <li><a href="#">Winged Delegates Digital Art Contests 2026</a></li>
+                    </ul>
+                </div>
             </article>
 
             <!-- Column 2: Contests Listing -->
             <article class="card">
-                <span class="section-title">Contests Listing</span>
-                <h2><a href="https://wingeddelegates.github.io/contest">Browse public listings</a></h2>
-                <p>Find other art contests or post your contest on this website.</p>
-                <ul class="links-list">
-                    <li><a href="#">Art Contests: Public Listing</a></li>
-                </ul>
+                <div class="card-header">
+                    <span class="section-title">Contests Listing</span>
+                </div>
+                <div class="card-body">
+                    <h2><a href="https://wingeddelegates.github.io/contest">Browse public listings</a></h2>
+                    <p>Find other art contests or post your contest on this website.</p>
+                    <ul class="links-list">
+                        <li><a href="#">Art Contests: Public Listing</a></li>
+                    </ul>
+                </div>
             </article>
 
             <!-- Column 3: Resources (spans both columns) -->
             <article class="card resources">
-                <span class="section-title">Resources</span>
-                <h2>Helpful links</h2>
-                <p>Community resources, department dashboards, and nonprofit services.</p>
-                <div style="margin-top:0.5rem;">
-                    <table border="0" width="100%">
-                    <tr>
-                        <td valign="top" width="33%">
-                            <ul class="links-list2">
-                                <li><a href="https://www.sf311.org/" target="_blank">SF 311: Reporting →</a></li>
-                                <li><a href="https://hsh.sfgov.org/about/research-and-reports/data-dashboard/" target="_blank">HSH Department Data Dashboard →</a></li>
-                            </ul>
-                        </td>
-                        <td valign="top" width="33%">
-                            <ul class="links-list2">
-                                <li><a href="https://homelessness.ucsf.edu/our-impact/studies/california-statewide-study-people-experiencing-homelessness" target="_blank">UCSF Statewide Study →</a></li>
-                                <li><a href="https://www.spur.org/featured-project/homelessness-bay-area" target="_blank">SPUR: Bay Area →</a></li>
-                            </ul>
-                        </td>
-                        <td valign="top" width="33%">
-                            <ul class="links-list2">
-                                <li><a href="https://www.sfcoalition.org/" target="_blank">Coalition on Homelessness SF →</a></li>
-                                <li><a href="https://www.glide.org/" target="_blank">GLIDE Foundation Services →</a></li>
-                            </ul>
-                        </td>
-                    </tr>
-                    </table>
+                <div class="card-header">
+                    <span class="section-title">Resources</span>
+                </div>
+                <div class="card-body">
+                    <h2>Helpful links</h2>
+                    <p>Community resources, department dashboards, and nonprofit services.</p>
+                    <div style="margin-top:0.5rem;">
+                        <table border="0" width="100%">
+                        <tr>
+                            <td valign="top" width="33%">
+                                <ul class="links-list2">
+                                    <li><a href="https://www.sf311.org/" target="_blank">SF 311: Reporting →</a></li>
+                                    <li><a href="https://hsh.sfgov.org/about/research-and-reports/data-dashboard/" target="_blank">HSH Department Data Dashboard →</a></li>
+                                </ul>
+                            </td>
+                            <td valign="top" width="33%">
+                                <ul class="links-list2">
+                                    <li><a href="https://homelessness.ucsf.edu/our-impact/studies/california-statewide-study-people-experiencing-homelessness" target="_blank">UCSF Statewide Study →</a></li>
+                                    <li><a href="https://www.spur.org/featured-project/homelessness-bay-area" target="_blank">SPUR: Bay Area →</a></li>
+                                </ul>
+                            </td>
+                            <td valign="top" width="33%">
+                                <ul class="links-list2">
+                                    <li><a href="https://www.sfcoalition.org/" target="_blank">Coalition on Homelessness SF →</a></li>
+                                    <li><a href="https://www.glide.org/" target="_blank">GLIDE Foundation Services →</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </table>
+                    </div>
                 </div>
             </article>
         </div>
