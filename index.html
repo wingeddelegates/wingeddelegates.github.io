@@ -5,7 +5,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B6DKS6XQSR"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag(){dataLayer.push(arguments);} 
       gtag('js', new Date());
     
       gtag('config', 'G-B6DKS6XQSR');
@@ -17,15 +17,22 @@
     <meta name="description" content="Art competition; digital art contest; fire safety; homeless; drug free; san francisco; united states; art awards; photography; mixed art; winged delegate">
     <meta name="robots" content="index, follow">
     <style>
+        /* Black & White theme adjustments */
         :root {
-            --bg-color: #f4f6f8;
-            --card-bg: #ffffff;
-            --text-primary: #2d3748;
-            --text-secondary: #4a5568;
-            --accent-blue: #3182ce;
-            --accent-teal: #319795;
-            --accent-orange: #dd6b20;
-            --border-color: #e2e8f0;
+            --bg-color: #000;        /* page background black */
+            --card-bg: #0f0f0f;      /* dark card background */
+            --text-primary: #ffffff; /* main text white */
+            --text-secondary: #d1d1d1;
+            --heading-bg: #ffffff;   /* headings on white strip */
+            --heading-color: #000000;/* headings black */
+            --border-color: #222;
+            --muted: #888;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         body {
@@ -33,15 +40,35 @@
             background-color: var(--bg-color);
             color: var(--text-primary);
             line-height: 1.6;
-            margin: 0;
-            padding: 0;
+            display: flex;            /* make sticky footer layout */
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Make the main content area grow so footer sits at the bottom */
+        .container {
+            max-width: 1200px;
+            margin: -2rem auto 4rem auto;
+            padding: 0 1.5rem;
+            flex: 1 0 auto; /* allow container to expand */
+        }
+
+        /* Headings: black text on white strip for contrast */
+        h1, h2, h3, h4, h5, h6 {
+            background: var(--heading-bg);
+            color: var(--heading-color);
+            display: inline-block;
+            padding: 0.15em 0.5em;
+            margin: 0.6em 0 0.4em 0;
+            line-height: 1.2;
+            border-radius: 2px;
         }
 
         header {
-            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
-            color: white;
+            background: transparent; /* keep header transparent so heading strip stands out */
+            color: var(--text-primary);
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 4rem 2rem 2rem 2rem;
         }
 
         header h1 {
@@ -53,16 +80,11 @@
         header p {
             margin: 1rem 0 0 0;
             font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
+            opacity: 0.95;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: -2rem auto 4rem auto;
-            padding: 0 1.5rem;
+            color: var(--text-secondary);
         }
 
         .grid {
@@ -74,14 +96,15 @@
         .card {
             background-color: var(--card-bg);
             border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
             padding: 2rem;
             border-top: 4px solid transparent;
+            color: var(--text-primary);
         }
 
-        .card.data { border-top-color: var(--accent-blue); }
-        .card.causes { border-top-color: var(--accent-orange); }
-        .card.resources { border-top-color: var(--accent-teal); }
+        .card.data { border-top-color: var(--heading-bg); }
+        .card.causes { border-top-color: var(--heading-bg); }
+        .card.resources { border-top-color: var(--heading-bg); }
 
         .card h2 {
             margin-top: 0;
@@ -96,17 +119,15 @@
             font-size: 0.95rem;
         }
 
-        .links-list {
+        .links-list, .links-list2 {
             list-style: none;
             padding: 0;
             margin: 1.5rem 0 0 0;
         }
 
-        .links-list li {
-            margin-bottom: 0.75rem;
-        }
+        .links-list li, .links-list2 li { margin-bottom: 0.75rem; }
 
-        .links-list a {
+        .links-list a, .links-list2 a {
             color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
@@ -114,60 +135,38 @@
             transition: color 0.2s ease;
         }
 
-        .links-list a:hover {
-            color: var(--accent-blue);
-            text-decoration: underline;
-        }
-
-        .links-list2 {
-            list-style: none;
-            padding: 0;
-            margin: 1.5rem 0 0 0;
-        }
-
-        .links-list2 li {
-            margin-bottom: 0.75rem;
-        }
-
-        .links-list2 a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 300;
-            display: inline-block;
-            transition: color 0.2s ease;
-        }
-
-        .links-list2 a:hover {
-            color: var(--accent-blue);
-            text-decoration: underline;
-        }
-
-        .card.data .links-list a:hover { color: var(--accent-blue); }
-        .card.causes .links-list a:hover { color: var(--accent-orange); }
-        .card.resources .links-list a:hover { color: var(--accent-teal); }
+        .links-list a:hover, .links-list2 a:hover { color: var(--muted); text-decoration: underline; }
 
         .note-box {
-            background-color: #ebf8ff;
-            border-left: 4px solid var(--accent-blue);
+            background-color: #111;
+            border-left: 4px solid #fff;
             padding: 1rem;
             border-radius: 0 4px 4px 0;
             margin-top: 1.5rem;
             font-size: 0.85rem;
-            color: #2b6cb0;
+            color: var(--text-secondary);
         }
 
         footer {
+            flex-shrink: 0; /* prevent footer from shrinking */
             text-align: center;
             padding: 2rem;
             color: var(--text-secondary);
             font-size: 0.85rem;
             border-top: 1px solid var(--border-color);
-            background-color: #edf2f7;
+            background-color: transparent;
+        }
+
+        /* Ensure the legal line is visually pinned to the bottom on large viewports */
+        footer .site-legal {
+            display: block;
+            margin-top: 0.5rem;
         }
 
         @media (max-width: 768px) {
             header h1 { font-size: 2rem; }
             .container { margin-top: 1rem; }
+            h1, h2, h3 { display: block; }
         }
     </style>
 </head>
@@ -183,22 +182,20 @@
             
             <!-- Column 1: Data & Tracking -->
             <div class="card data">
-                <h2>🤝 <a href="https://wingeddelegates.github.io/sf">Digital Art contests</h2>
+                <h2>🤝 <a href="https://wingeddelegates.github.io/sf">Digital Art contests</a></h2>
                 <p>Publishing your artwork to heal minds, inspire people, and develop the communities</p>
                 <ul class="links-list">
                     <li>Winged Delegates Digital Art Contests 2026</li>
                 </ul>
-                </a>
             </div>
 
             <!-- Column 2: Analysis & Root Causes -->
             <div class="card causes">
-                <h2>🔍 <a href="https://wingeddelegates.github.io/contest">Contests listing</h2>
+                <h2>🔍 <a href="https://wingeddelegates.github.io/contest">Contests listing</a></h2>
                 <p>Find other art contests or post your contest on this website</p>
                 <ul class="links-list">
                     <li>Art Contests: Public Listing</li>
                 </ul>
-                </a>
             </div>
         </div>
         <br>
@@ -219,7 +216,7 @@
                     </td>
                     <td width=33% align=left>
                         <ul class="links-list2">
-                            <li><a href="https://homelessness.ucsf.edu/our-impact/studies/california-statewide-study-people-experiencing-homelessness" target="_blank">UCSF Statewide Homelessness Study (CASPEH) →</a></li>
+                            <li><a href="https://homelessness.ucsf.edu/our-impact/studies/california-statewide-study-people-experiencing-homelessness" target="_blank">UCSF Statewide Homelessness [...]
                             <li><a href="https://www.spur.org/featured-project/homelessness-bay-area" target="_blank">SPUR: Homelessness in the Bay Area →</a></li>
                             <li><a href="https://www.sfchronicle.com/projects/sf-homelessness-crisis/" target="_blank">SF Chronicle Special Reports →</a></li>
                         </ul>
@@ -233,15 +230,12 @@
                     </td>
                 </tr>
                 </table>
-                <!--<div class="note-box" style="background-color: #e6fffa; border-left-color: var(--accent-teal); color: #234e52;">
-                    <strong>In an Emergency:</strong> If someone is experiencing a medical or psychiatric emergency on the street, call 911 and request the Street Crisis Response Team (SCRT).
-                </div>-->
             </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Winged Delegates. All rights reserved. | Supporting artists in Tenderloin and beyond.</p>
+        <p class="site-legal">&copy; 2026 Winged Delegates. All rights reserved. | Supporting artists in Tenderloin and beyond.</p>
     </footer>
 
 </body>
